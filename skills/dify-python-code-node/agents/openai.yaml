@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dify Python Code Node"
+  short_description: "Build maintainable Python Code nodes for Dify"
+  default_prompt: "Use $dify-python-code-node to create a tested Python Code node with a clear input/output contract."

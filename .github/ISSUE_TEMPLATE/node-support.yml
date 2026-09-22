@@ -1,0 +1,24 @@
+name: Node or version support
+description: Request support for a Dify node shape or release.
+title: "[support] "
+labels: ["enhancement", "compatibility"]
+body:
+  - type: input
+    id: dify-version
+    attributes:
+      label: Dify version
+    validations:
+      required: true
+  - type: input
+    id: node-type
+    attributes:
+      label: Node or app type
+    validations:
+      required: true
+  - type: textarea
+    id: export-shape
+    attributes:
+      label: Redacted export shape or upstream source
+      description: Remove all credentials and workspace-bound identifiers.
+    validations:
+      required: true

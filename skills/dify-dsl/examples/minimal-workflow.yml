@@ -1,0 +1,123 @@
+version: 0.7.0
+kind: app
+app:
+  name: Minimal Normalizer
+  mode: workflow
+  icon: 🧹
+  icon_background: "#E8F8F5"
+  icon_type: emoji
+  description: Normalize submitted text without a model provider.
+  use_icon_as_answer_icon: false
+dependencies: []
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features: {}
+  graph:
+    edges:
+      - id: start-source-normalize-target
+        source: start
+        sourceHandle: source
+        target: normalize
+        targetHandle: target
+        type: custom
+        zIndex: 0
+        data:
+          isInIteration: false
+          isInLoop: false
+          sourceType: start
+          targetType: code
+      - id: normalize-source-end-target
+        source: normalize
+        sourceHandle: source
+        target: end
+        targetHandle: target
+        type: custom
+        zIndex: 0
+        data:
+          isInIteration: false
+          isInLoop: false
+          sourceType: code
+          targetType: end
+    nodes:
+      - id: start
+        type: custom
+        position:
+          x: 80
+          y: 80
+        positionAbsolute:
+          x: 80
+          y: 80
+        sourcePosition: right
+        targetPosition: left
+        width: 244
+        height: 90
+        selected: false
+        data:
+          type: start
+          title: Input
+          desc: Text to normalize.
+          variables:
+            - variable: text
+              label: Text
+              type: paragraph
+              required: true
+              max_length: 4000
+              options: []
+      - id: normalize
+        type: custom
+        position:
+          x: 424
+          y: 80
+        positionAbsolute:
+          x: 424
+          y: 80
+        sourcePosition: right
+        targetPosition: left
+        width: 244
+        height: 90
+        selected: false
+        data:
+          type: code
+          title: Normalize
+          desc: Trim surrounding whitespace.
+          code_language: python3
+          code: |
+            def main(text: str) -> dict:
+                return {"result": (text or "").strip()}
+          variables:
+            - variable: text
+              value_selector:
+                - start
+                - text
+              value_type: string
+          outputs:
+            result:
+              type: string
+              children: null
+      - id: end
+        type: custom
+        position:
+          x: 768
+          y: 80
+        positionAbsolute:
+          x: 768
+          y: 80
+        sourcePosition: right
+        targetPosition: left
+        width: 244
+        height: 90
+        selected: false
+        data:
+          type: end
+          title: Result
+          desc: Normalized text.
+          outputs:
+            - variable: result
+              value_selector:
+                - normalize
+                - result
+    viewport:
+      x: 0
+      y: 0
+      zoom: 0.8

@@ -1,0 +1,11 @@
+{
+  "name": "dify-dsl-layout-runtime",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Pinned runtime dependencies for deterministic Dify DSL layout.",
+  "dependencies": {
+    "elkjs": "0.11.1",
+    "yaml": "2.9.1"
+  }
+}

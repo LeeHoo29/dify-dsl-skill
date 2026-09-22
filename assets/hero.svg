@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Dify DSL Skill workflow validation</title>
+  <desc id="desc">A business request becomes Dify YAML, passes static validation, and is ready for import review.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#071D1C"/>
+      <stop offset="1" stop-color="#0B3D3A"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#001312" flood-opacity=".42"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="520" rx="36" fill="url(#background)"/>
+  <circle cx="1080" cy="70" r="160" fill="#16A085" opacity=".14"/>
+  <circle cx="80" cy="470" r="190" fill="#79E2D0" opacity=".08"/>
+  <text x="72" y="96" fill="#F4FFFD" font-family="ui-sans-serif, system-ui, sans-serif" font-size="48" font-weight="700">Dify DSL Skill</text>
+  <text x="72" y="140" fill="#A9CBC6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22">Author portable workflows. Catch structural failures before import.</text>
+  <g filter="url(#shadow)">
+    <rect x="72" y="210" width="278" height="176" rx="22" fill="#F7FFFD"/>
+    <text x="104" y="258" fill="#0B3D3A" font-family="ui-monospace, monospace" font-size="17" font-weight="700">REQUIREMENT</text>
+    <text x="104" y="304" fill="#1A4D49" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20">Normalize text</text>
+    <text x="104" y="336" fill="#1A4D49" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20">Return a stable result</text>
+    <text x="104" y="368" fill="#52817D" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16">No workspace secrets</text>
+
+    <rect x="461" y="190" width="278" height="216" rx="22" fill="#102D2B" stroke="#79E2D0" stroke-width="2"/>
+    <text x="493" y="238" fill="#79E2D0" font-family="ui-monospace, monospace" font-size="17" font-weight="700">DIFY YAML</text>
+    <text x="493" y="282" fill="#E8FAF7" font-family="ui-monospace, monospace" font-size="17">start → code → end</text>
+    <text x="493" y="320" fill="#A9CBC6" font-family="ui-monospace, monospace" font-size="15">version: 0.7.0</text>
+    <text x="493" y="350" fill="#A9CBC6" font-family="ui-monospace, monospace" font-size="15">selectors: checked</text>
+    <text x="493" y="380" fill="#A9CBC6" font-family="ui-monospace, monospace" font-size="15">code outputs: checked</text>
+
+    <rect x="850" y="210" width="278" height="176" rx="22" fill="#16A085"/>
+    <text x="882" y="258" fill="#062522" font-family="ui-monospace, monospace" font-size="17" font-weight="700">VALIDATED</text>
+    <text x="882" y="309" fill="#F4FFFD" font-family="ui-sans-serif, system-ui, sans-serif" font-size="28" font-weight="700">0 errors</text>
+    <text x="882" y="345" fill="#D9F8F1" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">portable mode passed</text>
+  </g>
+  <path d="M370 298h66m-14-14 14 14-14 14M759 298h66m-14-14 14 14-14 14" fill="none" stroke="#79E2D0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="72" y="470" fill="#79E2D0" font-family="ui-monospace, monospace" font-size="17">Workflow · Chatflow · Agent · RAG Pipeline · static validation</text>
+</svg>

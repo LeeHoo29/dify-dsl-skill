@@ -1,0 +1,165 @@
+version: 0.7.0
+kind: app
+app:
+  name: Managed Code Source
+  mode: workflow
+  icon: 🧩
+  icon_background: "#E8F8F5"
+  icon_type: emoji
+  description: Parse a JSON object using a separately maintained Code-node source.
+  use_icon_as_answer_icon: false
+dependencies: []
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features: {}
+  graph:
+    edges:
+      - id: start-source-normalize-target
+        source: start
+        sourceHandle: source
+        target: normalize
+        targetHandle: target
+        type: custom
+        zIndex: 0
+        data:
+          isInIteration: false
+          isInLoop: false
+          sourceType: start
+          targetType: code
+      - id: normalize-source-end-target
+        source: normalize
+        sourceHandle: source
+        target: end
+        targetHandle: target
+        type: custom
+        zIndex: 0
+        data:
+          isInIteration: false
+          isInLoop: false
+          sourceType: code
+          targetType: end
+    nodes:
+      - id: start
+        type: custom
+        position:
+          x: 80
+          y: 90
+        positionAbsolute:
+          x: 80
+          y: 90
+        width: 244
+        height: 90
+        sourcePosition: right
+        targetPosition: left
+        selected: false
+        data:
+          type: start
+          title: Input
+          desc: JSON object text.
+          variables:
+            - variable: raw_json
+              label: JSON object
+              type: paragraph
+              required: true
+              max_length: 10000
+              options: []
+      - id: normalize
+        type: custom
+        position:
+          x: 424
+          y: 90
+        positionAbsolute:
+          x: 424
+          y: 90
+        width: 244
+        height: 90
+        sourcePosition: right
+        targetPosition: left
+        selected: false
+        data:
+          type: code
+          title: Normalize
+          desc: |-
+            Parse and normalize the submitted JSON object.
+
+            Code source: skills/dify-dsl/examples/code-nodes/normalize_payload.py
+          code_language: python3
+          code: |
+            # Dify input variables:
+            # - raw_json (String, required): JSON object text supplied by the Start node.
+            #
+            # Dify output variables:
+            # - can_continue (Boolean): Whether parsing succeeded.
+            # - error_message (String): Safe parsing error for the failure branch.
+            # - result (Object): Shallow normalized payload for downstream nodes.
+            import json
+
+
+            def main(raw_json: str) -> dict:
+                try:
+                    parsed = json.loads(raw_json or "{}")
+                    if not isinstance(parsed, dict):
+                        raise ValueError("input must be a JSON object")
+                except Exception as error:
+                    return {
+                        "can_continue": False,
+                        "error_message": str(error),
+                        "result": {},
+                    }
+
+                return {
+                    "can_continue": True,
+                    "error_message": "",
+                    "result": {str(key): value for key, value in list(parsed.items())[:20]},
+                }
+          variables:
+            - variable: raw_json
+              value_selector:
+                - start
+                - raw_json
+              value_type: string
+          outputs:
+            can_continue:
+              type: boolean
+              children: null
+            error_message:
+              type: string
+              children: null
+            result:
+              type: object
+              children: null
+      - id: end
+        type: custom
+        position:
+          x: 768
+          y: 80
+        positionAbsolute:
+          x: 768
+          y: 80
+        width: 244
+        height: 110
+        sourcePosition: right
+        targetPosition: left
+        selected: false
+        data:
+          type: end
+          title: Result
+          desc: Parsing status and normalized payload.
+          outputs:
+            - variable: can_continue
+              value_selector:
+                - normalize
+                - can_continue
+            - variable: error_message
+              value_selector:
+                - normalize
+                - error_message
+            - variable: result
+              value_selector:
+                - normalize
+                - result
+    viewport:
+      x: 0
+      y: 0
+      zoom: 0.8

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dify DSL"
+  short_description: "Author and validate portable Dify DSL workflows"
+  default_prompt: "Use $dify-dsl to create and validate an importable Dify workflow."

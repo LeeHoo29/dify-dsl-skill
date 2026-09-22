@@ -1,0 +1,33 @@
+name: Validator false positive
+description: Report valid Dify DSL rejected by the validator.
+title: "[validator] "
+labels: ["validator", "compatibility"]
+body:
+  - type: input
+    id: dify-version
+    attributes:
+      label: Dify version
+      placeholder: 1.17.1
+    validations:
+      required: true
+  - type: input
+    id: dsl-version
+    attributes:
+      label: DSL version and app mode
+      placeholder: 0.7.0 workflow
+    validations:
+      required: true
+  - type: textarea
+    id: validator-output
+    attributes:
+      label: Redacted validator output
+      description: Never include credentials, dataset IDs, signed URLs, or private hostnames.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Why the DSL is valid
+      description: Include an official source, fixture, or reproducible successful import when possible.
+    validations:
+      required: true

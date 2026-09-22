@@ -1,0 +1,71 @@
+version: 0.7.0
+kind: app
+app:
+  name: Minimal Echo Chatflow
+  mode: advanced-chat
+  icon: 💬
+  icon_background: "#EBF5FB"
+  icon_type: emoji
+  description: Echo the current query without a model provider.
+  use_icon_as_answer_icon: false
+dependencies: []
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features: {}
+  graph:
+    edges:
+      - id: start-source-answer-target
+        source: start
+        sourceHandle: source
+        target: answer
+        targetHandle: target
+        type: custom
+        zIndex: 0
+        data:
+          isInIteration: false
+          isInLoop: false
+          sourceType: start
+          targetType: answer
+    nodes:
+      - id: start
+        type: custom
+        position:
+          x: 80
+          y: 98
+        positionAbsolute:
+          x: 80
+          y: 98
+        sourcePosition: right
+        targetPosition: left
+        width: 244
+        height: 54
+        selected: false
+        data:
+          type: start
+          title: Start
+          desc: Receive the current query.
+          variables: []
+      - id: answer
+        type: custom
+        position:
+          x: 424
+          y: 80
+        positionAbsolute:
+          x: 424
+          y: 80
+        sourcePosition: right
+        targetPosition: left
+        width: 244
+        height: 90
+        selected: false
+        data:
+          type: answer
+          title: Answer
+          desc: Return the submitted query.
+          answer: "{{#sys.query#}}"
+          variables: []
+    viewport:
+      x: 0
+      y: 0
+      zoom: 0.8
