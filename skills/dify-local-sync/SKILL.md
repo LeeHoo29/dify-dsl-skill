@@ -133,3 +133,23 @@ Do not report completion until verification passes. Report Draft and Published s
 - Do not confuse `INNER_API_KEY` with `INNER_API_KEY_FOR_PLUGIN`.
 - Require the selected account to be a member of the selected Workspace before import.
 - Preserve the current App mapping unless the user explicitly requests rebinding or force-create.
+
+## Natural-Language Handoff
+
+When a user asks to install or use this Skill, keep installation and Dify mutation separate:
+
+```text
+Install `dify-dsl`, `dify-python-code-node`, and `dify-local-sync` from
+https://github.com/LeeHoo29/dify-dsl-skill.
+Only install and verify Skill discovery; do not configure Docker or modify Dify yet.
+```
+
+After installation, request the Dify path and target account/workspace explicitly. A useful setup handoff is:
+
+```text
+Use $dify-local-sync with my local Dify at /path/to/dify.
+First inspect the setup and run a sync dry-run for /path/to/dsl-project/dev-dsl/app.yml.
+Ask before changing Inner API configuration, creating or overwriting the App, and publishing.
+```
+
+Never interpret installation of this Skill as authorization for any of those Dify mutations.

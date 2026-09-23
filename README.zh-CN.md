@@ -60,6 +60,27 @@ npm ci --prefix skills/dify-dsl
 
 环境要求：Python 3.10+、Node.js 20+、npm。
 
+### 使用自然语言安装
+
+也可以直接让 Agent 安装，不需要手动输入 Shell 命令：
+
+```text
+请从 https://github.com/LeeHoo29/dify-dsl-skill 为当前 Agent 安装三个 Skill：
+dify-dsl、dify-python-code-node、dify-local-sync。
+请使用仓库文档中的 `npx skills add` 命令。
+本次只安装 Skill，不修改我的 Dify 配置，不导入 DSL，也不发布 Workflow。
+```
+
+如果只需要生成和校验 DSL，可以不安装 `dify-local-sync`：
+
+```text
+请从 https://github.com/LeeHoo29/dify-dsl-skill 为当前 Agent 安装
+`dify-dsl` 和 `dify-python-code-node`，并确认两个 Skill 可以被发现。
+本次只安装 Skill。
+```
+
+安装只会修改 Agent 本地的 Skill 目录，不会配置 `INNER_API_KEY`、修改 Docker、导入 DSL 或发布 Dify 应用。
+
 ## 让 Agent 生成
 
 ```text
@@ -148,6 +169,8 @@ python3 skills/dify-local-sync/scripts/verify.py dev-dsl/app.yml \
 ```
 
 setup 只把 Key 写入 Dify 已忽略的 Compose env 文件，并生成用于向 API 注入配置的本地 Compose override。创建与 Draft 导出使用容器内部的 Inner API；覆盖、版本确认和发布使用 API 容器内的 Dify Service Layer，因为 Dify 1.17.1 的 Inner API 未提供这些操作。配置、Draft 创建/覆盖和发布是三个独立授权边界。
+
+本地同步脚本以 Dify `1.17.1` 为已验证基线。其他 Dify 版本可能改变内部 Service Layer 或 Inner API 请求结构。请先执行 setup 检查和 sync dry-run，确认目标版本与 Compose 结构后，再使用 `--apply`。
 
 ## Code 源码规则
 

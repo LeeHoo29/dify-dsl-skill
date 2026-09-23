@@ -60,6 +60,28 @@ npm ci --prefix skills/dify-dsl
 
 Requirements: Python 3.10+, Node.js 20+, and npm.
 
+### Install With Natural Language
+
+You can ask an Agent to install the repository instead of typing the shell command:
+
+```text
+Install the three Skills from https://github.com/LeeHoo29/dify-dsl-skill
+for this Agent: dify-dsl, dify-python-code-node, and dify-local-sync.
+Use the repository's documented `npx skills add` command.
+Only install the Skills. Do not change my Dify configuration, import any DSL,
+or publish a Workflow.
+```
+
+For authoring only, omit `dify-local-sync`:
+
+```text
+Install `dify-dsl` and `dify-python-code-node` from
+https://github.com/LeeHoo29/dify-dsl-skill for this Agent.
+Only install the Skills and verify that both are discoverable.
+```
+
+Installation changes the Agent's local Skill directory. It does not configure `INNER_API_KEY`, modify Docker, import a DSL, or publish a Dify app.
+
 ## Generate With An Agent
 
 ```text
@@ -152,6 +174,8 @@ python3 skills/dify-local-sync/scripts/verify.py dev-dsl/app.yml \
 ```
 
 Setup writes the key only to Dify's ignored Compose env file and creates an ignored Compose override that injects it into API. Creation and Draft export use container-local Inner API. Overwrite, version confirmation, and publication use Dify's Service Layer inside the API container because Dify 1.17.1 does not expose those operations through Inner API. Setup, Draft create/overwrite, and publication remain distinct authorization boundaries.
+
+The local sync scripts are tested against Dify `1.17.1`. Other Dify versions may change the internal Service Layer or Inner API payloads. Start with setup inspection and sync dry-run; do not use `--apply` until the target version and Compose layout have been checked.
 
 ## Code Source Policy
 

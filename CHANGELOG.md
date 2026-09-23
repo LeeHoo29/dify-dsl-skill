@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2 - 2026-09-23
+
+- Added copyable natural-language installation prompts for the three Skills and the authoring-only pair.
+- Clarified that installation does not configure Dify or authorize import/publication.
+- Documented the Dify 1.17.1 tested baseline and the required dry-run step for other versions.
+
 ## 0.2.1 - 2026-09-23
 
 - Fixed Python 3.10 compatibility in local sync scripts by using `timezone.utc` instead of `datetime.UTC`.
