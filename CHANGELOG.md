@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.4 - 2026-09-23
+
+- Fixed the portable plugin manifest version so it matches the compatibility manifest.
+
 ## 0.2.3 - 2026-09-23
 
 - Added a 30-second, README-ready GIF showing natural-language authoring, Code-source synchronization, ELK layout, validation, and local Draft/Published verification.
