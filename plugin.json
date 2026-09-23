@@ -1,6 +1,6 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "dify-dsl-skill",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "description": "Generate, auto-layout, validate, and optionally publish Workflow and Chatflow DSL to a local self-hosted Dify."
 }

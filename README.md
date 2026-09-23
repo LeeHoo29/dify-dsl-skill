@@ -28,9 +28,20 @@ The project combines Agent guidance with deterministic tooling so a generated wo
 - Code source synchronizer: keeps canonical `.py` files and embedded `data.code` byte-equivalent after newline normalization.
 - ELK auto-layout: lays out the full graph, branches, notes, and Loop/Iteration children; verifies idempotence and overlap.
 
+## Why This Project
+
+| Approach | Natural-language authoring | Deterministic layout | Canonical Code sources | Draft sync | Workflow publication |
+|---|---:|---:|---:|---:|---:|
+| Manual Dify UI | No | Manual | Limited | Yes | Yes |
+| Workflow template collection | No | Prebuilt only | Varies | Manual | Manual |
+| Official `difyctl` | No | No | No | Cloud/remote | No |
+| `dify-dsl-skill` | Yes | Yes | Yes | Local self-hosted | Local self-hosted |
+
+Template collections help you reuse an existing workflow. This project helps an Agent design a new workflow from requirements, keep Python maintainable, lay out the canvas, validate the result, and optionally synchronize it to a local Dify.
+
 ## Supported Scope
 
-| Artifact | v0.2 status |
+| Artifact | v0.3 status |
 |---|---|
 | Workflow (`workflow`) | Primary |
 | Chatflow (`advanced-chat`) | Primary |
@@ -39,7 +50,7 @@ The project combines Agent guidance with deterministic tooling so a generated wo
 | Agent / Chatbot / Text Generator model-config apps | Experimental guidance and structural validation |
 | RAG Pipeline | Experimental authoring; official upstream fixtures are validator-audited |
 | Local self-hosted Docker import/publish | Supported through explicit `dify-local-sync` authorization |
-| Dify Cloud or remote-host publication | Out of scope; use official `difyctl` for Draft import/export |
+| Dify Cloud or remote-host publication | Out of scope; use official [`difyctl`](https://docs.dify.ai/en/cli/install) for Draft import/export |
 
 ## Install
 
@@ -136,6 +147,20 @@ natural language
   -> pre-import DSL candidate
   -> optional local Draft import and explicit publication
 ```
+
+## Showcase
+
+[Customer Feedback Triage](showcase/customer-feedback-triage/README.md) is a model-free, directly importable Workflow generated from a natural-language requirement. It demonstrates validation, two decision stages, three branch results, Variable Aggregator convergence, canonical Python sources, automatic layout, and a stable final output.
+
+```text
+Customer input -> Validate -> Priority decision
+                         |-> Invalid submission
+                         |-> Priority follow-up
+                         `-> Standard review
+                                   -> Merge -> End
+```
+
+The Showcase passes Code-source synchronization, ELK overlap/idempotence checks, portable validation with 0 errors/0 warnings, and focused Python behavior tests. A Chinese [launch article](docs/launch-article.zh-CN.md), English [launch article](docs/launch-article.en.md), and channel-specific [community launch kit](docs/community-launch-kit.md) are included for reuse.
 
 ## Validate And Format
 
@@ -234,6 +259,28 @@ Pre-import checks alone do not prove runtime behavior. A local sync is complete 
 ## Security
 
 The public repository contains no real credentials, dataset IDs, workspace IDs, signed URLs, or private endpoints. Local sync refuses Git-tracked Compose env files and keeps keys container-local. See [SECURITY.md](SECURITY.md) before reporting a suspected leak or attaching an exported DSL.
+
+## FAQ
+
+### Does this install Dify?
+
+No. Skill installation and DSL authoring do not require Dify. Local synchronization requires an existing user-controlled Docker Compose deployment.
+
+### Does installation modify my Dify instance?
+
+No. Installing the Skills only changes the Agent's Skill directory. Setup, Draft synchronization, and publication are separately authorized operations.
+
+### Why use this instead of `difyctl`?
+
+Use official `difyctl` for Dify Cloud or remote Draft transport. Use this project when you need natural-language workflow authoring, canonical Code sources, deterministic canvas layout, static validation, or explicitly authorized local publication.
+
+### Which Dify version is supported?
+
+Dify 1.17.1 with App DSL 0.7.0 is the automated compatibility baseline. A live Dify 1.15.0 import and publication was also demonstrated, but that instance exports DSL 0.6.0 and therefore does not pass the current strict version-equality check. Treat other versions as dry-run-first targets.
+
+### Why did verification fail after a successful import?
+
+Check the local/exported DSL versions first. The verifier intentionally rejects version, graph, Workspace, SHA, or Published-pointer drift instead of reporting a partial match as success.
 
 ## Development
 

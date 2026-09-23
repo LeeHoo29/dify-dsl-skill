@@ -12,8 +12,15 @@
 
 - Explicitly authorized local self-hosted Inner API setup, import, publication, and verification.
 
+## v0.3
+
+- Customer Feedback Triage Showcase with canonical Code sources and live canvas evidence.
+- GitHub Social Preview and launch articles/community copy.
+- Dependency preflight and installation guidance for new users.
+
 ## Next
 
+- Version-aware local verification for Dify 1.15.x/1.17.x DSL export differences.
 - Import-tested complex examples for Dify 1.17.x.
 - Stronger Agent/model-config fixtures and generation guidance.
 - RAG Pipeline-specific selector and datasource validation.

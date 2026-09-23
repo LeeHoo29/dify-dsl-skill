@@ -28,9 +28,20 @@
 - Code 源码同步：确保独立 `.py` 文件与 DSL 的 `data.code` 一致。
 - ELK 自动布局：排布整张图、分支、注释和容器子节点，并检查幂等性与重叠。
 
+## 为什么使用这个项目
+
+| 方案 | 自然语言生成 | 确定性排版 | 独立 Code 源码 | Draft 同步 | Workflow 发布 |
+|---|---:|---:|---:|---:|---:|
+| 手工 Dify UI | 否 | 手工 | 能力有限 | 是 | 是 |
+| Workflow 模板集合 | 否 | 仅复用现有布局 | 不一定 | 手工 | 手工 |
+| 官方 `difyctl` | 否 | 否 | 否 | Cloud/远程 | 否 |
+| `dify-dsl-skill` | 是 | 是 | 是 | 本地 self-hosted | 本地 self-hosted |
+
+模板集合适合复用现有工作流；本项目让 Agent 从需求开始设计新工作流，维护独立 Python 源码，自动排版、校验，并可选同步到本地 Dify。
+
 ## 支持范围
 
-| 产物 | v0.2 状态 |
+| 产物 | v0.3 状态 |
 |---|---|
 | Workflow (`workflow`) | 主要支持 |
 | Chatflow (`advanced-chat`) | 主要支持 |
@@ -39,7 +50,7 @@
 | Agent / Chatbot / Text Generator | 实验性指导和结构校验 |
 | RAG Pipeline | 实验性生成，官方模板已进入校验器兼容审计 |
 | 本地 self-hosted Docker 导入/发布 | 通过显式授权的 `dify-local-sync` 支持 |
-| Dify Cloud 或远程发布 | 不在范围内；Draft 导入/导出请使用官方 `difyctl` |
+| Dify Cloud 或远程发布 | 不在范围内；Draft 导入/导出请使用官方 [`difyctl`](https://docs.dify.ai/en/cli/install) |
 
 ## 安装
 
@@ -136,6 +147,20 @@ portable 检查和 DSL 校验后再交付。
   -> 可选的本地 Draft 导入和显式发布
 ```
 
+## Showcase
+
+[客户反馈分流 Workflow](showcase/customer-feedback-triage/README.zh-CN.md) 是一个从自然语言需求生成、无需模型提供商、可以直接导入的公开案例。它展示输入校验、两级判断、三条结果分支、Variable Aggregator 汇合、独立 Python 源码、自动排版和稳定 End 输出。
+
+```text
+客户输入 -> 输入校验 -> 优先级判断
+                      |-> 输入无效
+                      |-> 优先跟进
+                      `-> 标准归档
+                               -> 聚合 -> End
+```
+
+该案例已通过 Code 源码同步、ELK 无重叠与幂等校验、0 errors/0 warnings portable 校验和 Python 行为测试。仓库还提供可复用的[中文首发文章](docs/launch-article.zh-CN.md)、[英文文章](docs/launch-article.en.md)和按渠道拆分的[社区发布文案](docs/community-launch-kit.md)。
+
 ## 校验与排版
 
 ```bash
@@ -227,6 +252,28 @@ setup 只把 Key 写入 Dify 已忽略的 Compose env 文件，并生成用于�
 ## 安全边界
 
 公开仓库不包含真实凭据、Dataset ID、Workspace ID、签名 URL 或私有接口。本地同步拒绝被 Git 跟踪的 Compose env 文件，并保持 Key 只在本地容器链路使用。提交导出的 DSL 前请阅读 [SECURITY.md](SECURITY.md)。
+
+## 常见问题
+
+### 这个项目会安装 Dify 吗？
+
+不会。安装 Skill 和生成 DSL 都不要求 Dify；只有本地同步需要已经部署并由用户控制的 Docker Compose Dify。
+
+### 安装 Skill 会修改 Dify 吗？
+
+不会。安装只修改 Agent 的 Skill 目录。Inner API 配置、Draft 同步和发布是三类需要分别授权的操作。
+
+### 为什么不直接使用 `difyctl`？
+
+Cloud 或远程 Draft 传输优先使用官方 `difyctl`。需要自然语言生成、独立 Code 源码、确定性画布排版、静态校验或本地显式发布时使用本项目。
+
+### 支持哪些 Dify 版本？
+
+Dify 1.17.1 与 App DSL 0.7.0 是自动兼容审计基线。本项目还在真实 Dify 1.15.0 上完成过导入和发布，但该版本会导出 DSL 0.6.0，因此当前严格版本一致性检查不会通过。其他版本应先执行 dry-run。
+
+### 为什么导入成功后 verify 仍失败？
+
+先检查本地 DSL 与导出 DSL 的版本。verifier 会主动拒绝版本、graph、Workspace、SHA 或 Published 指针漂移，不会把局部匹配误报成成功。
 
 ## 开发验证
 

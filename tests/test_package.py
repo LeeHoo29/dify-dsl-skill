@@ -81,6 +81,12 @@ class PackageTests(unittest.TestCase):
             self.assertGreaterEqual(image.width, 900)
             self.assertGreaterEqual(image.height, 500)
 
+    def test_social_preview_has_github_dimensions(self) -> None:
+        preview = ROOT / "assets" / "social-preview.png"
+        self.assertTrue(preview.is_file())
+        with Image.open(preview) as image:
+            self.assertEqual((1280, 640), image.size)
+
     def test_release_tree_has_no_private_project_markers(self) -> None:
         blocked = (
             "admin" + "@" + "admin.ai",

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0 - 2026-09-23
+
+- Added the model-free Customer Feedback Triage Showcase with four canonical Python Code sources, a portable importable Workflow, Chinese/English usage docs, and a redacted live Dify canvas.
+- Added focused behavior tests, zero-warning portable validation, and CI checks for the Showcase.
+- Added a GitHub Social Preview asset, renderer, launch articles, and channel-specific community launch copy.
+- Updated GitHub repository description and Topics for search discovery.
+
 ## 0.2.6 - 2026-09-23
 
 - Added dependency-by-mode documentation for Skill installation, DSL authoring, and local Dify synchronization.
