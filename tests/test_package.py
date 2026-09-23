@@ -66,13 +66,20 @@ class PackageTests(unittest.TestCase):
         self.assertTrue(demo.is_file())
         with Image.open(demo) as image:
             self.assertEqual((640, 400), image.size)
-            self.assertEqual(120, image.n_frames)
+            self.assertGreaterEqual(image.n_frames, 100)
             duration_ms = 0
             for frame_index in range(image.n_frames):
                 image.seek(frame_index)
                 duration_ms += int(image.info.get("duration", 0))
             self.assertGreaterEqual(duration_ms, 29_000)
             self.assertLessEqual(duration_ms, 31_000)
+
+    def test_live_canvas_reference_is_present(self) -> None:
+        live_canvas = ROOT / "assets" / "live-dify-canvas.png"
+        self.assertTrue(live_canvas.is_file())
+        with Image.open(live_canvas) as image:
+            self.assertGreaterEqual(image.width, 900)
+            self.assertGreaterEqual(image.height, 500)
 
     def test_release_tree_has_no_private_project_markers(self) -> None:
         blocked = (

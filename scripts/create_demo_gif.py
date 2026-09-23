@@ -11,6 +11,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "assets" / "demo.gif"
+LIVE_CANVAS = ROOT / "assets" / "live-dify-canvas.png"
 WIDTH, HEIGHT = 960, 600
 PREVIEW_SIZE = (640, 400)
 FPS = 4
@@ -226,8 +227,22 @@ def sync_banner(draw: ImageDraw.ImageDraw, t: float) -> None:
         label(draw, (530, 357), "verified", "small", TEAL)
 
 
+def live_dify_frame() -> Image.Image | None:
+    if not LIVE_CANVAS.is_file():
+        return None
+    image = Image.open(LIVE_CANVAS).convert("RGB").resize(PREVIEW_SIZE, Image.Resampling.LANCZOS)
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((0, 370, PREVIEW_SIZE[0], PREVIEW_SIZE[1]), fill="#0A1B22")
+    label(draw, (16, 378), "LIVE LOCAL DIFY  /  PUBLISHED WORKFLOW VERIFIED", "small", TEAL)
+    return image
+
+
 def make_frame(index: int) -> Image.Image:
     t = index / FPS
+    if t >= 26.0:
+        live = live_dify_frame()
+        if live is not None:
+            return live
     image, draw = shell()
     active = 0 if t < 5 else 1 if t < 10 else 2 if t < 16 else 3 if t < 22 else 4 if t < 26 else 5
     progress(draw, active)

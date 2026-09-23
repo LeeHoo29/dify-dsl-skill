@@ -11,6 +11,8 @@
 
 ![30-second workflow demo](assets/demo.gif)
 
+The final scene includes a redacted canvas crop from a real local Dify run; account and workspace sidebars are excluded.
+
 Turn natural-language requirements into usable, maintainable, and automatically laid-out [Dify](https://github.com/langgenius/dify) Workflow or Chatflow DSL.
 
 The project combines Agent guidance with deterministic tooling so a generated workflow can be reviewed, validated, and imported without routine mouse-based canvas cleanup.

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.5 - 2026-09-23
+
+- Added a redacted live local Dify canvas crop to the final stage of the 30-second demo GIF.
+- Kept account/sidebar content out of the public visual asset while preserving the published workflow evidence.
+
 ## 0.2.4 - 2026-09-23
 
 - Fixed the portable plugin manifest version so it matches the compatibility manifest.
