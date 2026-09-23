@@ -15,7 +15,7 @@ import shlex
 import subprocess
 import sys
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -870,7 +870,7 @@ def update_mapping(
         "current_dsl_version": result.current_dsl_version,
         "imported_dsl_version": result.imported_dsl_version,
         "sha256": sha256,
-        "synced_at": datetime.now(UTC).isoformat().replace("+00:00", "Z"),
+        "synced_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
     }
     publish_keys = (
         "published_sha256",
@@ -886,7 +886,7 @@ def update_mapping(
                 "published_sha256": sha256,
                 "published_workflow_id": publish_result.workflow_id,
                 "published_workflow_version": publish_result.workflow_version,
-                "published_at": datetime.now(UTC).isoformat().replace("+00:00", "Z"),
+                "published_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             }
         )
     files[dsl_key] = entry

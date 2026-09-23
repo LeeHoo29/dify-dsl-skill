@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1 - 2026-09-23
+
+- Fixed Python 3.10 compatibility in local sync scripts by using `timezone.utc` instead of `datetime.UTC`.
+
 ## 0.2.0 - 2026-09-23
 
 - Added the `dify-local-sync` Skill for explicitly authorized local self-hosted Dify configuration, import, overwrite, publication, and verification.

@@ -10,7 +10,7 @@ import shlex
 import shutil
 import subprocess
 import sys
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -240,7 +240,7 @@ def main() -> int:
             print("setup: already configured and verified")
             return 0
 
-        stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+        stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         backup_dir = env_file.parent / ".dify-local-sync-backups"
         env_backup = make_backup(env_file, backup_dir, "compose-env", stamp)
         previous_text = env_file.read_text(encoding="utf-8")
