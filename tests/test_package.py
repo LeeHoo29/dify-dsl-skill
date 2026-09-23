@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 import yaml
+from PIL import Image
 
 
 ROOT = Path(__file__).parents[1]
@@ -59,6 +60,19 @@ class PackageTests(unittest.TestCase):
             ".dify-local-sync-backups/",
         ):
             self.assertIn(pattern, ignore)
+
+    def test_demo_gif_is_a_30_second_readme_asset(self) -> None:
+        demo = ROOT / "assets" / "demo.gif"
+        self.assertTrue(demo.is_file())
+        with Image.open(demo) as image:
+            self.assertEqual((640, 400), image.size)
+            self.assertEqual(120, image.n_frames)
+            duration_ms = 0
+            for frame_index in range(image.n_frames):
+                image.seek(frame_index)
+                duration_ms += int(image.info.get("duration", 0))
+            self.assertGreaterEqual(duration_ms, 29_000)
+            self.assertLessEqual(duration_ms, 31_000)
 
     def test_release_tree_has_no_private_project_markers(self) -> None:
         blocked = (

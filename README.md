@@ -9,6 +9,8 @@
 
 ![Dify DSL Skill overview](assets/hero.svg)
 
+![30-second workflow demo](assets/demo.gif)
+
 Turn natural-language requirements into usable, maintainable, and automatically laid-out [Dify](https://github.com/langgenius/dify) Workflow or Chatflow DSL.
 
 The project combines Agent guidance with deterministic tooling so a generated workflow can be reviewed, validated, and imported without routine mouse-based canvas cleanup.

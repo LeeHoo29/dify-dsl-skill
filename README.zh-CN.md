@@ -9,6 +9,8 @@
 
 ![Dify DSL Skill 概览](assets/hero.svg)
 
+![30 秒工作流演示](assets/demo.gif)
+
 通过自然语言生成可用、可维护、自动排版的 [Dify](https://github.com/langgenius/dify) Workflow 或 Chatflow DSL。
 
 项目把 Agent 设计能力与确定性工具结合起来，使生成的工作流可以在导入前完成源码同步、自动布局和静态校验，正常情况下不再需要进入 Dify 手工拖动节点。
