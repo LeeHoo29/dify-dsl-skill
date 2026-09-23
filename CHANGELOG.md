@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.6 - 2026-09-23
+
+- Added dependency-by-mode documentation for Skill installation, DSL authoring, and local Dify synchronization.
+- Added host preflight commands and a natural-language environment check prompt.
+- Clarified that the Skill does not install Dify and that container Python is provided by the running Dify API service.
+
 ## 0.2.5 - 2026-09-23
 
 - Added a redacted live local Dify canvas crop to the final stage of the 30-second demo GIF.

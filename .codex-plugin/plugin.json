@@ -1,6 +1,6 @@
 {
   "name": "dify-dsl-skill",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Generate validated, automatically laid-out Dify DSL and optionally import and publish it to a local self-hosted Dify.",
   "author": {
     "name": "LeeHoo29",

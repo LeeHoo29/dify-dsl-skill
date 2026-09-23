@@ -64,6 +64,26 @@ npm ci --prefix skills/dify-dsl
 
 环境要求：Python 3.10+、Node.js 20+、npm。
 
+### 按使用模式准备依赖
+
+| 使用模式 | 需要准备 | 不需要由本项目准备 |
+|---|---|---|
+| 只安装 Skill | Node.js 20+、npm/npx | Python、Docker、Dify 实例 |
+| 生成、校验和自动排版 DSL | Python 3.10+、`pip`、Node.js 20+、npm，以及用于克隆仓库的 Git | Docker 或正在运行的 Dify |
+| 本地 Draft 同步和 Workflow 发布 | 上述依赖、Docker Engine/Desktop、Compose v2、已运行且由用户控制的 Dify Compose、有效 Dify 账号和 Workspace | 不需要在宿主机额外安装 Dify 容器内部 Python，API 容器自带运行时 |
+
+本 Skill 不负责安装 Dify 本身。请先按照 Dify 官方 self-hosted 安装方式完成部署，再把 `dify-local-sync` 指向该部署目录。可以先执行只读预检：
+
+```bash
+node --version
+npm --version
+python3 --version
+docker --version
+docker compose version
+```
+
+只有安装 Skill 需要前两个命令。校验和自动排版需要 Python 与固定的 Node 依赖；本地同步只有在运行 Dify 时才需要 Docker。
+
 ### 使用自然语言安装
 
 也可以直接让 Agent 安装，不需要手动输入 Shell 命令：
@@ -84,6 +104,15 @@ dify-dsl、dify-python-code-node、dify-local-sync。
 ```
 
 安装只会修改 Agent 本地的 Skill 目录，不会配置 `INNER_API_KEY`、修改 Docker、导入 DSL 或发布 Dify 应用。
+
+在要求 Agent 安装或同步之前，可以先发送这条只读预检指令：
+
+```text
+请检查当前机器是否安装 Node.js/npm、Python 3.10+、Git 和 Docker Compose v2。
+然后检查我的本地 Dify Docker 是否可访问，并识别 Dify 版本。
+只报告缺少的依赖和兼容性风险。
+不要安装软件、修改 Docker、配置 Inner API、导入 DSL 或发布 Workflow。
+```
 
 ## 让 Agent 生成
 

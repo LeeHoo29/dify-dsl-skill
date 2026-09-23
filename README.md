@@ -64,6 +64,26 @@ npm ci --prefix skills/dify-dsl
 
 Requirements: Python 3.10+, Node.js 20+, and npm.
 
+### Prerequisites By Mode
+
+| Mode | Required | Not required from this repository |
+|---|---|---|
+| Install Skills only | Node.js 20+ and npm/npx | Python, Docker, or a Dify instance |
+| Generate, validate, and auto-layout DSL | Python 3.10+, `pip`, Node.js 20+, npm, and Git for cloning | Docker or a running Dify instance |
+| Local Draft sync and publication | The authoring prerequisites, Docker Engine/Desktop with Compose v2, a running user-controlled Dify Compose stack, and an active Dify account/workspace | A second host-side Python installation for the Dify container; the API container provides its own runtime |
+
+The Skill does not install Dify itself. Follow Dify's official self-hosted installation guide first, then point `dify-local-sync` at that deployment directory. For a quick preflight:
+
+```bash
+node --version
+npm --version
+python3 --version
+docker --version
+docker compose version
+```
+
+Only the first two commands are needed to install the Skills. Python and the pinned Node dependencies are needed for the validator/layout toolchain. Docker and a running Dify stack are needed only for local synchronization.
+
 ### Install With Natural Language
 
 You can ask an Agent to install the repository instead of typing the shell command:
@@ -85,6 +105,15 @@ Only install the Skills and verify that both are discoverable.
 ```
 
 Installation changes the Agent's local Skill directory. It does not configure `INNER_API_KEY`, modify Docker, import a DSL, or publish a Dify app.
+
+Before asking the Agent to install or synchronize anything, you can use this read-only preflight request:
+
+```text
+Check whether this machine has Node.js/npm, Python 3.10+, Git, and Docker Compose v2.
+Then check whether my local Dify Docker stack is reachable and identify its Dify version.
+Report missing prerequisites and compatibility risks only.
+Do not install software, change Docker, configure Inner API, import DSL, or publish a Workflow.
+```
 
 ## Generate With An Agent
 

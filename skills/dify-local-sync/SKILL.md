@@ -20,11 +20,23 @@ Read [references/inner-api-boundary.md](references/inner-api-boundary.md) before
 
 ## Prerequisites
 
+- Host Python 3.10+ and PyYAML for the launcher and DSL validation; install the repository's `requirements.txt` in the project environment.
+- Docker Engine/Desktop with Docker Compose v2 and permission to run `docker compose exec`.
 - A local Dify source/deployment directory containing Docker Compose and its `.env` file.
 - Dify 1.17.1 is the tested baseline. Recheck internal interfaces before using another release.
 - Running Docker with permission to execute commands in the Dify API container.
 - A validated Workflow or Chatflow DSL.
 - An active local Dify account. The script auto-selects it only when exactly one active account exists.
+
+This Skill does not install Dify or host Docker. The API container supplies the Dify-internal Python runtime used by Service Layer calls; do not install a second copy inside the container. Run a read-only preflight before mutation:
+
+```bash
+python3 --version
+docker --version
+docker compose version
+docker compose -f /path/to/dify/docker/docker-compose.yaml \
+  --env-file /path/to/dify/docker/.env ps
+```
 
 Resolve scripts relative to this Skill directory before running them.
 
