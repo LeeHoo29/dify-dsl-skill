@@ -1,7 +1,7 @@
 {
   "name": "dify-dsl-skill",
-  "version": "0.1.0",
-  "description": "Turn natural-language requirements into validated, maintainable, and automatically laid-out Dify Workflow and Chatflow DSL.",
+  "version": "0.2.0",
+  "description": "Generate validated, automatically laid-out Dify DSL and optionally import and publish it to a local self-hosted Dify.",
   "author": {
     "name": "LeeHoo29",
     "url": "https://github.com/LeeHoo29"
@@ -9,20 +9,20 @@
   "homepage": "https://github.com/LeeHoo29/dify-dsl-skill",
   "repository": "https://github.com/LeeHoo29/dify-dsl-skill",
   "license": "MIT",
-  "keywords": ["dify", "dsl", "workflow", "chatflow", "agent-skills", "yaml", "validator", "elkjs"],
+  "keywords": ["dify", "dsl", "workflow", "chatflow", "agent-skills", "yaml", "validator", "elkjs", "self-hosted"],
   "skills": "./skills/",
   "interface": {
     "displayName": "Dify DSL",
-    "shortDescription": "Generate and auto-layout validated Dify workflows.",
-    "longDescription": "Turn natural-language requirements into maintainable Dify Workflow and Chatflow DSL with companion Python Code-node authoring, canonical source synchronization, ELK automatic layout, and deterministic pre-import validation.",
+    "shortDescription": "Generate, layout, and locally publish Dify workflows.",
+    "longDescription": "Turn natural-language requirements into maintainable Dify Workflow and Chatflow DSL with Python Code-node authoring, canonical source synchronization, ELK automatic layout, deterministic validation, and explicitly authorized local self-hosted import and publication.",
     "developerName": "LeeHoo29",
     "category": "Developer Tools",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://github.com/LeeHoo29/dify-dsl-skill",
     "defaultPrompt": [
       "Create, auto-layout, and validate a Dify workflow from my requirements.",
-      "Review this Dify DSL for import and editor compatibility.",
-      "Troubleshoot why this Dify workflow YAML fails to import."
+      "Configure trusted local sync for my self-hosted Dify, then import and publish this DSL.",
+      "Troubleshoot why this local Dify workflow failed to synchronize."
     ],
     "brandColor": "#16A085",
     "composerIcon": "./assets/icon.svg",

@@ -23,6 +23,7 @@ jobs:
           node-version: "22"
       - run: python -m pip install -r requirements.txt
       - run: npm ci --prefix skills/dify-dsl
+      - run: python -m py_compile skills/dify-local-sync/scripts/*.py
       - run: python -m unittest discover -s tests -v
       - run: >-
           python skills/dify-dsl/scripts/sync_code_nodes.py

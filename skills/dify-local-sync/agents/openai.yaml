@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dify Local Sync"
+  short_description: "Import and publish DSL to local self-hosted Dify"
+  default_prompt: "Use $dify-local-sync to safely configure and synchronize a validated DSL to my local self-hosted Dify."

@@ -19,13 +19,14 @@ The project combines Agent guidance with deterministic tooling so a generated wo
 
 - `dify-dsl`: designs the graph, writes YAML, integrates Code-node contracts, applies ELK layout, and performs pre-import validation.
 - `dify-python-code-node`: writes and tests every new or materially changed Python Code-node source.
+- `dify-local-sync`: safely configures a user-controlled local Dify, imports or overwrites Draft, optionally publishes, and strictly verifies the result.
 - Static validator: checks graph integrity, selectors, Code contracts, Loop/Iteration structure, editor-sensitive fields, versions, and portable secrets.
 - Code source synchronizer: keeps canonical `.py` files and embedded `data.code` byte-equivalent after newline normalization.
 - ELK auto-layout: lays out the full graph, branches, notes, and Loop/Iteration children; verifies idempotence and overlap.
 
 ## Supported Scope
 
-| Artifact | v0.1 status |
+| Artifact | v0.2 status |
 |---|---|
 | Workflow (`workflow`) | Primary |
 | Chatflow (`advanced-chat`) | Primary |
@@ -33,16 +34,18 @@ The project combines Agent guidance with deterministic tooling so a generated wo
 | App DSL `0.6.0` | Compatibility mode; pass `--target-version 0.6.0` |
 | Agent / Chatbot / Text Generator model-config apps | Experimental guidance and structural validation |
 | RAG Pipeline | Experimental authoring; official upstream fixtures are validator-audited |
-| Live import, publish, deployment, or plugin installation | Out of scope |
+| Local self-hosted Docker import/publish | Supported through explicit `dify-local-sync` authorization |
+| Dify Cloud or remote-host publication | Out of scope; use official `difyctl` for Draft import/export |
 
 ## Install
 
-Install both skills for Codex and Claude Code:
+Install all three skills for Codex and Claude Code:
 
 ```bash
 npx skills add LeeHoo29/dify-dsl-skill \
   --skill dify-dsl \
   --skill dify-python-code-node \
+  --skill dify-local-sync \
   -g -a codex -a claude-code -y
 ```
 
@@ -76,6 +79,7 @@ natural language
   -> ELK automatic layout
   -> static and portability validation
   -> pre-import DSL candidate
+  -> optional local Draft import and explicit publication
 ```
 
 ## Validate And Format
@@ -98,6 +102,57 @@ python3 skills/dify-dsl/scripts/validate_dify_dsl.py dev-dsl/app.yml \
 
 Use `--portable` only for files intended to move between workspaces or be shared publicly. Ordinary validation allows target-workspace credential and dataset bindings.
 
+## Quick Local Self-Hosted Sync
+
+`dify-local-sync` is restricted to a user-controlled local Dify Docker Compose deployment. Dify 1.17.1 is the tested baseline. It never exposes Inner API through a remote URL and never prints the generated key.
+
+An Agent can drive the complete flow from natural language:
+
+```text
+Use $dify-dsl to build, source-sync, auto-layout, and validate this workflow.
+Then use $dify-local-sync with my local Dify at /path/to/dify.
+Ask separately before changing local Inner API configuration, synchronizing Draft,
+and publishing the Workflow.
+```
+
+Inspect without changing anything:
+
+```bash
+python3 skills/dify-local-sync/scripts/setup.py --dify-root /path/to/dify
+```
+
+After explicitly authorizing local configuration:
+
+```bash
+python3 skills/dify-local-sync/scripts/setup.py --dify-root /path/to/dify --apply
+```
+
+Preview an import/overwrite:
+
+```bash
+python3 skills/dify-local-sync/scripts/sync.py dev-dsl/app.yml \
+  --project-root /path/to/dsl-project \
+  --dify-root /path/to/dify --via-container \
+  --account-email user@example.com
+```
+
+After explicitly authorizing Draft synchronization and publication:
+
+```bash
+python3 skills/dify-local-sync/scripts/sync.py dev-dsl/app.yml \
+  --project-root /path/to/dsl-project \
+  --dify-root /path/to/dify --via-container \
+  --account-email user@example.com \
+  --apply --publish
+
+python3 skills/dify-local-sync/scripts/verify.py dev-dsl/app.yml \
+  --project-root /path/to/dsl-project \
+  --dify-root /path/to/dify --via-container \
+  --strict-sha --require-published
+```
+
+Setup writes the key only to Dify's ignored Compose env file and creates an ignored Compose override that injects it into API. Creation and Draft export use container-local Inner API. Overwrite, version confirmation, and publication use Dify's Service Layer inside the API container because Dify 1.17.1 does not expose those operations through Inner API. Setup, Draft create/overwrite, and publication remain distinct authorization boundaries.
+
 ## Code Source Policy
 
 Dify must embed Code-node source in YAML, but embedded text should not become the canonical source in a maintained repository.
@@ -113,15 +168,15 @@ For `dev-dsl/*.yml` repository mode:
 
 Public examples include a minimal Workflow, a minimal Chatflow, and a managed-Code Workflow whose canonical Python source is synchronized into the DSL.
 
-- Local unit and package tests cover validation, portable-secret handling, Code-source synchronization, and branch/container layout.
+- Local unit and package tests cover validation, portable-secret handling, Code-source synchronization, branch/container layout, local env setup, Profile application, and publication mapping.
 - CI audits Dify `1.17.1`'s official Workflow fixtures and RAG transform templates without copying those fixtures into this repository.
 - Public examples pass strict portable validation and idempotent layout checks.
 
-Passing these checks means "pre-import validated," not "runtime verified." Model providers, datasets, plugins, and target-workspace credentials still require the target Dify installation.
+Pre-import checks alone do not prove runtime behavior. A local sync is complete only after Draft verification and, when requested, Published pointer/version verification. Models, datasets, plugins, and target-workspace credentials still belong to the target Dify installation.
 
 ## Security
 
-The public repository contains no real credentials, dataset IDs, workspace IDs, signed URLs, or private endpoints. See [SECURITY.md](SECURITY.md) before reporting a suspected leak or attaching an exported DSL.
+The public repository contains no real credentials, dataset IDs, workspace IDs, signed URLs, or private endpoints. Local sync refuses Git-tracked Compose env files and keeps keys container-local. See [SECURITY.md](SECURITY.md) before reporting a suspected leak or attaching an exported DSL.
 
 ## Development
 

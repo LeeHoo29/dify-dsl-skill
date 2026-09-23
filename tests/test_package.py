@@ -9,7 +9,11 @@ import yaml
 
 
 ROOT = Path(__file__).parents[1]
-SKILL_ROOTS = [ROOT / "skills" / "dify-dsl", ROOT / "skills" / "dify-python-code-node"]
+SKILL_ROOTS = [
+    ROOT / "skills" / "dify-dsl",
+    ROOT / "skills" / "dify-python-code-node",
+    ROOT / "skills" / "dify-local-sync",
+]
 
 
 class PackageTests(unittest.TestCase):
@@ -31,6 +35,7 @@ class PackageTests(unittest.TestCase):
         self.assertEqual("dify-dsl-skill", compatibility["name"])
         self.assertEqual(compatibility["name"], portable["name"])
         self.assertEqual(compatibility["version"], portable["version"])
+        self.assertEqual(3, len(compatibility["interface"]["defaultPrompt"]))
         for field in ("composerIcon", "logo"):
             asset = ROOT / compatibility["interface"][field]
             self.assertTrue(asset.is_file(), f"missing plugin asset: {asset}")
@@ -45,10 +50,19 @@ class PackageTests(unittest.TestCase):
                 with self.subTest(skill=skill_root.name, link=link):
                     self.assertTrue((skill_root / link).is_file())
 
+    def test_local_sync_artifacts_are_ignored(self) -> None:
+        ignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
+        for pattern in (
+            "config/dify-env.local.yml",
+            "dev-dsl/.dify-sync-map.json",
+            "docker/docker-compose.override.yaml",
+            ".dify-local-sync-backups/",
+        ):
+            self.assertIn(pattern, ignore)
+
     def test_release_tree_has_no_private_project_markers(self) -> None:
         blocked = (
             "admin" + "@" + "admin.ai",
-            "dify-env" + ".local",
             "dify-" + "dsl-sync",
             "dify-" + "flyposter",
             "fly" + "fus",

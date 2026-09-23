@@ -7,3 +7,9 @@ venv/
 node_modules/
 dist/
 build/
+
+# Local Dify sync artifacts and secret overrides.
+config/dify-env.local.yml
+dev-dsl/.dify-sync-map.json
+docker/docker-compose.override.yaml
+.dify-local-sync-backups/

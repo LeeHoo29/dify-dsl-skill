@@ -8,12 +8,17 @@
 - Deterministic ELK layout for root graphs and Loop/Iteration children.
 - Static, version, portability, and official-fixture validation.
 
+## v0.2
+
+- Explicitly authorized local self-hosted Inner API setup, import, publication, and verification.
+
 ## Next
 
 - Import-tested complex examples for Dify 1.17.x.
 - Stronger Agent/model-config fixtures and generation guidance.
 - RAG Pipeline-specific selector and datasource validation.
 - Plugin/tool schema hydration through explicit target-workspace exports.
-- Optional disposable-instance import and screenshot acceptance tests.
+- Disposable-instance import and screenshot acceptance tests.
+- Official `difyctl` adapter for Dify Cloud and remote self-hosted Draft synchronization.
 
-Live deployment and workspace mutation will remain separate capabilities with explicit authorization boundaries.
+Cloud/remote publication and all workspace mutations remain separate capabilities with explicit authorization boundaries.

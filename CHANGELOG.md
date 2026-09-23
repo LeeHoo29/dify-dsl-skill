@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0 - 2026-09-23
+
+- Added the `dify-local-sync` Skill for explicitly authorized local self-hosted Dify configuration, import, overwrite, publication, and verification.
+- Added safe Inner API setup with generated secrets, tracked-file refusal, mode-600 backups, a managed Compose override, API-only recreation, verification, and rollback.
+- Added separate DSL-project and Dify-deployment roots, container-only Inner API create/export, Service Layer overwrite/confirmation/publication, account/workspace membership checks, environment Profile application, local file-to-App mapping, and strict Draft/Published verification.
+
 ## 0.1.0 - 2026-09-22
 
 - Initial public release candidate.
